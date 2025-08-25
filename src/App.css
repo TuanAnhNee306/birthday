@@ -1,0 +1,536 @@
+/* --- Nút mở thư phong cách --- */
+.open-letter-btn {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.3rem;
+  background: linear-gradient(90deg, #ff6a88 0%, #ffb86c 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.7em 2em;
+  box-shadow: 0 4px 16px rgba(255, 106, 136, 0.2), 0 1.5px 6px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+  outline: none;
+  position: relative;
+  animation: shake 1.5s infinite cubic-bezier(.36,.07,.19,.97);
+}
+
+.open-letter-btn:hover {
+  background: linear-gradient(90deg, #ffb86c 0%, #ff6a88 100%);
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 8px 24px rgba(255, 106, 136, 0.25);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+/* src/App.css */
+
+/* --- Nhập font chữ lãng mạn từ Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap');
+
+/* --- Container chính và Nền Gradient (Đã tối ưu để căn giữa) --- */
+.birthday-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%; /* Khớp với chiều cao 100% của html, body, #root */
+  padding: 20px;
+  box-sizing: border-box;
+  color: white;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  animation: gradient-animation 15s ease infinite;
+  background-size: 400% 400%;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradient-animation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Khối nội dung chính (Đã sửa lỗi che chữ) --- */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px; /* Tạo khoảng cách đều giữa các phần tử bên trong */
+  text-align: center; /* Căn giữa các dòng chữ bên trong */
+  z-index: 10;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  max-width: 90%;
+  width: 500px;
+}
+
+/* --- Phần tiêu đề ban đầu --- */
+.title-container {
+  width: 100%;
+}
+
+.main-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin: 0;
+}
+
+.subtitle {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.2rem, 4vw, 1.6rem);
+  color: #fce4ec;
+  margin-top: 10px;
+}
+
+.click-instruction {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  margin-top: 15px; /* Thêm khoảng cách với phong bì */
+}
+
+
+/* --- Hiệu ứng Trái tim rơi --- */
+.heart {
+  position: absolute;
+  top: -10vh;
+  font-size: 1.5rem;
+  animation: fall linear forwards;
+  text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d;
+  z-index: 0;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* --- Hiệu ứng Phong bì thư (ĐÃ THU NHỎ) --- */
+.envelope-wrapper {
+  cursor: pointer;
+  position: relative;
+  /* Thêm margin top để tạo khoảng cách với tiêu đề */
+  margin-top: 15px;
+}
+
+.envelope {
+  position: relative;
+  width: 200px;  /* Giảm từ 280px */
+  height: 130px; /* Giảm từ 180px */
+  background-color: #f08080;
+  border-radius: 8px; /* Giảm nhẹ */
+  margin: 0 auto;
+  transition: transform 0.5s ease;
+}
+
+.envelope:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+.flap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  /* border-width phải bằng 1/2 width của .envelope */
+  border: 100px solid transparent; /* Giảm từ 140px */
+}
+
+.flap.top {
+  border-top-color: #cd5c5c;
+  /* transform translateY phải bằng -(height của .envelope) */
+  transform: translateY(-130px) rotateX(0deg); /* Giảm từ -180px */
+  transform-origin: 50% 100%;
+  transition: transform 0.6s ease-in-out;
+  z-index: 15;
+}
+
+.flap.front {
+  border-top-color: #f08080;
+  /* transform translateY phải bằng -(height của .envelope) */
+  transform: translateY(-130px); /* Giảm từ -180px */
+  z-index: 5;
+}
+
+.letter {
+  position: absolute;
+  top: 5px; /* Điều chỉnh vị trí */
+  left: 10px;
+  width: 180px;  /* Giảm từ 260px */
+  height: 120px; /* Giảm từ 170px */
+  background: white;
+  border-radius: 5px;
+  z-index: 1;
+  /* Điều chỉnh lại vị trí Y ban đầu */
+  transform: translateY(-65px); /* Giảm từ -100px */
+  transition: transform 0.6s ease-in-out;
+}
+
+.envelope-wrapper:hover .flap.top {
+  /* transform translateY phải bằng -(height của .envelope) */
+  transform: translateY(-130px) rotateX(180deg); /* Giảm từ -180px */
+}
+
+.envelope-wrapper:hover .letter {
+  transform: translateY(-10px);
+}
+
+.envelope-wrapper:active {
+    animation: open-letter-animation 1s forwards;
+}
+
+@keyframes open-letter-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(-5deg); }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+
+/* --- Nội dung thư và Lời chúc --- */
+.letter-content {
+  animation: fade-in 1.5s ease;
+  width: 100%;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.scroll-paper {
+  background-image: url('https://www.transparentpng.com/thumb/scroll-paper/st8BIt-scroll-paper-transparent-image.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 40px 24px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 95vw;
+  box-sizing: border-box;
+}
+
+.letter-title {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
+  color: #5d4037;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.message-container {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.4rem;
+  color: #4e342e;
+  line-height: 1.6;
+  max-width: 100%;
+  word-break: break-word;
+  white-space: pre-line;
+}
+.typed-out{
+  overflow: hidden;
+  border-right: .15em solid orange;
+  margin: 5px auto;
+  animation: typing 2s steps(40, end), blink-caret .75s step-end infinite;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+
+
+/* --- Nút điều khiển --- */
+.music-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  cursor: pointer;
+  z-index: 100;
+  font-family: sans-serif;
+  transition: background-color 0.3s;
+}
+.music-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-button {
+  margin-top: 20px;
+  padding: 12px 25px;
+  border: 2px solid #ff7979;
+  background: transparent;
+  color: #ff7979;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.gallery-button:hover {
+  background: #ff7979;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ff7979;
+}
+
+
+/* --- Hộp ảnh kỷ niệm --- */
+.gallery-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fade-in 0.5s ease;
+}
+
+.gallery-modal {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 15px;
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.gallery-modal h2 {
+    font-family: 'Pacifico', cursive;
+    color: #ff7979;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #999;
+  cursor: pointer;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-grid img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+
+/* ========================================= */
+/* === GIAO DIỆN CHO MOBILE (RESPONSIVE) === */
+/* ========================================= */
+@media (max-width: 768px) {
+  .content {
+    width: 100%;
+    gap: 20px;
+  }
+
+  /* Kích thước phong bì trên mobile không cần thay đổi vì nó đã khá nhỏ rồi */
+  .envelope {
+    transform: scale(0.9);
+  }
+  .envelope:hover {
+    transform: translateY(-5px) scale(0.95);
+  }
+
+  .scroll-paper {
+    padding: 50px 20px 40px 20px;
+    min-height: auto;
+    background-size: 100% 100%;
+  }
+
+  .letter-title {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    margin-bottom: 15px;
+  }
+
+  .message-container {
+    font-size: clamp(1.1rem, 5vw, 1.4rem);
+    line-height: 1.7;
+  }
+
+  .typed-out {
+    border-right: .1em solid orange;
+  }
+
+  .gallery-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .music-toggle {
+    bottom: 10px;
+    right: 10px;
+    padding: 8px 12px;
+  }
+
+  .gallery-modal {
+    width: 95%;
+    max-height: 85vh;
+  }
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+  }
+}
+
+/* --- Phần nhập mã iPhone (NEW) --- */
+.iphone-pass {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.iphone-pass-input {
+  width: 40px;
+  height: 48px;
+  font-size: 2rem;
+  text-align: center;
+  border-radius: 10px;
+  border: 2px solid #ffb6b9;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(255, 105, 135, 0.12);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.iphone-pass-input:focus {
+  border: 2px solid #ff6f91;
+}
+
+/* --- Phần nhập mã iPhone (NEW) --- */
+.password-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fade-in 1s;
+}
+
+.password-modal {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 22px;
+  box-shadow: 0 8px 32px 0 rgba(255, 106, 136, 0.18);
+  padding: 38px 32px 28px 32px;
+  text-align: center;
+  min-width: 320px;
+  max-width: 90vw;
+  font-family: 'Pacifico', cursive;
+  color: #ff6a88;
+}
+
+.password-modal h2 {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.5rem;
+  color: #ff6a88;
+  margin-bottom: 22px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 6px #fad0c4;
+}
+
+@media (max-width: 600px) {
+  .password-modal h4 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.08rem;
+    color: #a0527a;
+    font-weight: 500;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+  }
+}
+
+.iphone-pass {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.iphone-pass-input {
+  width: 48px;
+  height: 56px;
+  font-size: 2.2rem;
+  text-align: center;
+  border-radius: 14px;
+  border: 2.5px solid #ffb86c;
+  background: linear-gradient(135deg, #fff6e9 0%, #ffe0e0 100%);
+  box-shadow: 0 2px 8px rgba(255, 106, 136, 0.10);
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  font-family: 'Dancing Script', cursive;
+  color: #ff6a88;
+}
+
+.iphone-pass-input:focus {
+  border: 2.5px solid #ff6a88;
+  box-shadow: 0 0 8px #ffb86c;
+}
+
+.password-error {
+  color: #ff4d4d;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  text-shadow: 1px 1px 6px #fad0c4;
+}
+
+@media (max-width: 600px) {
+  .password-modal {
+    padding: 22px 8px 18px 8px;
+    min-width: 90vw;
+  }
+  .iphone-pass-input {
+    width: 38px;
+    height: 44px;
+    font-size: 1.5rem;
+  }
+}
