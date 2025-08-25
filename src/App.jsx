@@ -169,7 +169,7 @@ function App() {
   const [isLetterOpen, setLetterOpen] = useState(false);
   const [audio] = useState(
     new Audio(
-      import.meta.env.BASE_URL + "public/nhac/happy-birthday-to-you-370804.mp3"
+      import.meta.env.BASE_URL + "nhac/happy-birthday-to-you-370804.mp3"
     )
   );
   const [isPlaying, setIsPlaying] = useState(false);
